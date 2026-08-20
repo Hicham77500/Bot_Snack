@@ -1,4 +1,4 @@
-"""Food placement — TODO: implement (Aya El JANATI)."""
+"""Food placement for Snake."""
 
 from dataclasses import dataclass
 
@@ -14,4 +14,4 @@ class Food:
         board_height: int,
         occupied: set[tuple[int, int]],
     ) -> "Food":
-        raise NotImplementedError("Aya: implement food.spawn()")
+        raise NotImplementedError

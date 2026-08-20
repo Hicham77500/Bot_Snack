@@ -2,19 +2,6 @@
 
 Projet de groupe — Agent capable de jouer au Snake à niveaux, avec comparaison objective contre un agent aléatoire.
 
-> **Ce repo est un scaffold** : structure + contrat d'API + stubs.  
-> Chaque développeur implémente **sa partie sur sa branche** avec son propre `git log`.  
-> **Prompts Cursor par personne** → [`docs/prompts/`](docs/prompts/)
-
-## Prompts équipe (à copier dans Cursor)
-
-| Dev | Branche | Prompt |
-|-----|---------|--------|
-| Aya El JANATI | `feat/game-engine` | [docs/prompts/aya.md](docs/prompts/aya.md) |
-| Khalil Jouani | `feat/environment` | [docs/prompts/khalil.md](docs/prompts/khalil.md) |
-| Hicham Guendouz | `feat/dqn-training` | [docs/prompts/hicham.md](docs/prompts/hicham.md) |
-| Marwan Ghrairi | `feat/ui` | [docs/prompts/marwan.md](docs/prompts/marwan.md) |
-
 ## Équipe
 
 | Membre | Rôle |
@@ -89,23 +76,13 @@ source .venv/bin/activate   # Windows: .venv\Scripts\activate
 pip install -r requirements.txt
 ```
 
-## Utilisation (après implémentation par l'équipe)
-
-Les commandes ci-dessous fonctionneront une fois chaque membre aura implémenté sa partie :
+## Utilisation
 
 ```bash
-# Aya — game engine (headless)
-python -c "from game.game import Game; g=Game(); g.reset()"
-
-# Khalil — baseline random
+python -m ui.game_view --level 1
 python -m training.evaluate --agent random --episodes 100 --level 1
-
-# Hicham — entraînement DQN
 python -m training.train --episodes 500 --level 1
 python -m training.evaluate --agent dqn --model models/best_agent.pth --episodes 100
-
-# Marwan — UI
-python -m ui.game_view --level 1
 python -m ui.auto_play --level 1 --model models/best_agent.pth
 python -m ui.statistics --episodes 100 --model models/best_agent.pth
 ```

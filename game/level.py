@@ -1,4 +1,4 @@
-"""Level configuration — TODO: implement (Aya El JANATI)."""
+"""Level configuration with obstacles."""
 
 from dataclasses import dataclass, field
 
@@ -13,4 +13,4 @@ class Level:
 
     @classmethod
     def from_number(cls, level: int) -> "Level":
-        raise NotImplementedError("Aya: implement level.from_number() — 4 levels")
+        raise NotImplementedError

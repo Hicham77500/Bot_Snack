@@ -1,4 +1,4 @@
-"""Board grid — TODO: implement (Aya El JANATI)."""
+"""Board grid for Snake."""
 
 from dataclasses import dataclass
 
@@ -9,7 +9,7 @@ class Board:
     height: int
 
     def is_inside(self, x: int, y: int) -> bool:
-        raise NotImplementedError("Aya: implement board.is_inside()")
+        raise NotImplementedError
 
     def is_collision(self, x: int, y: int) -> bool:
-        raise NotImplementedError("Aya: implement board.is_collision()")
+        raise NotImplementedError

@@ -1,10 +1,10 @@
-"""Evaluate agents — TODO: implement (Khalil + Hicham)."""
+"""Evaluate agents — standalone script to reload and test best model."""
 
 import argparse
 
 
 def evaluate_agent(agent, env, episodes: int = 100, level: int = 1) -> dict:
-    raise NotImplementedError("Implement evaluate_agent() — Random: Khalil, DQN: Hicham")
+    raise NotImplementedError
 
 
 def main() -> None:
@@ -15,7 +15,7 @@ def main() -> None:
     parser.add_argument("--level", type=int, default=1)
     parser.add_argument("--seed", type=int, default=42)
     args = parser.parse_args()
-    raise NotImplementedError("Implement evaluate main()")
+    raise NotImplementedError
 
 
 if __name__ == "__main__":

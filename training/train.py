@@ -1,4 +1,4 @@
-"""DQN training loop — TODO: implement (Hicham Guendouz)."""
+"""DQN training loop for Snake."""
 
 import argparse
 
@@ -10,7 +10,7 @@ def train(
     curve_path: str = "results/curves/training_curve.png",
     seed: int = 42,
 ) -> list[float]:
-    raise NotImplementedError("Hicham: implement training loop")
+    raise NotImplementedError
 
 
 def main() -> None:

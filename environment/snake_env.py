@@ -1,4 +1,4 @@
-"""Gym-like RL environment — TODO: implement (Khalil Jouani)."""
+"""Gym-like RL environment wrapping the Snake game engine."""
 
 import numpy as np
 
@@ -7,8 +7,6 @@ from environment.observation import OBSERVATION_SIZE
 
 
 class SnakeEnv:
-    """RL environment: reset() / step(action) interface. See CONTRACT.md."""
-
     def __init__(self, level: int = 1, max_level: int = 4):
         self.max_level = max_level
         self.level = level
@@ -22,7 +20,7 @@ class SnakeEnv:
         return NUM_ACTIONS
 
     def reset(self, level: int | None = None) -> np.ndarray:
-        raise NotImplementedError("Khalil: implement env.reset()")
+        raise NotImplementedError
 
     def step(self, action: int) -> tuple[np.ndarray, float, bool, dict]:
-        raise NotImplementedError("Khalil: implement env.step()")
+        raise NotImplementedError

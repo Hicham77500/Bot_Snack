@@ -1,4 +1,4 @@
-"""Experience replay buffer — TODO: implement (Hicham Guendouz)."""
+"""Experience replay buffer for DQN."""
 
 import numpy as np
 
@@ -15,10 +15,10 @@ class ReplayBuffer:
         next_state: np.ndarray,
         done: bool,
     ) -> None:
-        raise NotImplementedError("Hicham: implement replay_buffer.push()")
+        raise NotImplementedError
 
     def sample(self, batch_size: int) -> tuple:
-        raise NotImplementedError("Hicham: implement replay_buffer.sample()")
+        raise NotImplementedError
 
     def __len__(self) -> int:
         return 0

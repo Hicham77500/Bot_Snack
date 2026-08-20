@@ -1,4 +1,4 @@
-"""Reward computation — TODO: implement (Khalil Jouani)."""
+"""Reward computation for Snake RL environment."""
 
 from game.game import GameState
 
@@ -8,5 +8,4 @@ REWARD_SURVIVAL = 0.1
 
 
 def compute_reward(state: GameState) -> float:
-    """Return reward for the last transition. See CONTRACT.md."""
-    raise NotImplementedError("Khalil: implement compute_reward()")
+    raise NotImplementedError

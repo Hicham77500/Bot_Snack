@@ -1,4 +1,4 @@
-"""Learning curve visualization — TODO: implement (Marwan Ghrairi)."""
+"""Learning curve visualization and Random vs DQN comparison."""
 
 import argparse
 
@@ -10,7 +10,7 @@ def main() -> None:
     parser.add_argument("--model", type=str, default="models/best_agent.pth")
     parser.add_argument("--seed", type=int, default=42)
     args = parser.parse_args()
-    raise NotImplementedError("Marwan: implement ui/statistics.py")
+    raise NotImplementedError
 
 
 if __name__ == "__main__":

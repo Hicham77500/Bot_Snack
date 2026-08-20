@@ -1,8 +1,4 @@
-"""Main Snake game engine — TODO: implement (Aya El JANATI).
-
-Headless only — no Pygame imports allowed in this module.
-See CONTRACT.md and docs/prompts/aya.md
-"""
+"""Main Snake game engine — headless, Pygame-free."""
 
 from dataclasses import dataclass
 
@@ -24,28 +20,26 @@ class GameState:
 
 
 class Game:
-    """Snake game engine. Must work without any UI."""
-
     def __init__(self, level: int = 1):
         self._level = level
 
     def reset(self, level: int | None = None) -> GameState:
-        raise NotImplementedError("Aya: implement game.reset()")
+        raise NotImplementedError
 
     def step(self, action: int) -> GameState:
-        raise NotImplementedError("Aya: implement game.step()")
+        raise NotImplementedError
 
     def get_state(self) -> GameState:
-        raise NotImplementedError("Aya: implement game.get_state()")
+        raise NotImplementedError
 
     def get_reward(self) -> float:
-        raise NotImplementedError("Aya: implement game.get_reward()")
+        raise NotImplementedError
 
     def is_done(self) -> bool:
-        raise NotImplementedError("Aya: implement game.is_done()")
+        raise NotImplementedError
 
     def get_score(self) -> int:
-        raise NotImplementedError("Aya: implement game.get_score()")
+        raise NotImplementedError
 
     def get_level(self) -> int:
-        raise NotImplementedError("Aya: implement game.get_level()")
+        raise NotImplementedError

@@ -1,4 +1,4 @@
-"""DQN agent — TODO: implement (Hicham Guendouz)."""
+"""DQN agent for Snake."""
 
 import numpy as np
 
@@ -23,7 +23,7 @@ class DQNAgent:
         self.epsilon = epsilon
 
     def select_action(self, state: np.ndarray, training: bool = False) -> int:
-        raise NotImplementedError("Hicham: implement dqn_agent.select_action()")
+        raise NotImplementedError
 
     def remember(
         self,
@@ -33,13 +33,13 @@ class DQNAgent:
         next_state: np.ndarray,
         done: bool,
     ) -> None:
-        raise NotImplementedError("Hicham: implement dqn_agent.remember()")
+        raise NotImplementedError
 
     def train_step(self) -> float | None:
-        raise NotImplementedError("Hicham: implement dqn_agent.train_step()")
+        raise NotImplementedError
 
     def save(self, path: str) -> None:
-        raise NotImplementedError("Hicham: implement dqn_agent.save()")
+        raise NotImplementedError
 
     def load(self, path: str) -> None:
-        raise NotImplementedError("Hicham: implement dqn_agent.load()")
+        raise NotImplementedError
