@@ -1,0 +1,52 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+dist/
+*.egg-info/
+.eggs/
+*.egg
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Secrets
+.env
+.env.*
+
+# Model weights (host externally, link in README)
+models/*.pth
+models/*.pt
+models/*.pkl
+models/*.onnx
+
+# Generated results
+results/curves/*.png
+results/curves/*.jpg
+results/curves/*.pdf
+
+# Videos (host externally, link in README)
+*.mp4
+*.mov
+*.avi
+*.mkv
+
+# IDE / OS
+.idea/
+.vscode/
+.DS_Store
+*.swp
+*.swo
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Pytest / coverage
+.pytest_cache/
+.coverage
+htmlcov/
