@@ -1,4 +1,4 @@
-"""Snake entity."""
+"""Snake entity — TODO: implement (Aya El JANATI)."""
 
 from dataclasses import dataclass, field
 
@@ -16,23 +16,13 @@ class Snake:
     direction: tuple[int, int] = (1, 0)
 
     def head(self) -> tuple[int, int]:
-        return self.body[0]
+        raise NotImplementedError("Aya: implement snake.head()")
 
     def set_direction(self, action: int) -> None:
-        new_dir = DIRECTIONS[action]
-        # Prevent 180-degree turn
-        if (new_dir[0] + self.direction[0], new_dir[1] + self.direction[1]) == (0, 0):
-            return
-        self.direction = new_dir
+        raise NotImplementedError("Aya: implement snake.set_direction()")
 
     def move(self, grow: bool = False) -> tuple[int, int]:
-        hx, hy = self.head()
-        dx, dy = self.direction
-        new_head = (hx + dx, hy + dy)
-        self.body.insert(0, new_head)
-        if not grow:
-            self.body.pop()
-        return new_head
+        raise NotImplementedError("Aya: implement snake.move()")
 
     def collides_with_self(self, position: tuple[int, int]) -> bool:
-        return position in self.body
+        raise NotImplementedError("Aya: implement snake.collides_with_self()")

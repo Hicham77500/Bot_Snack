@@ -1,6 +1,4 @@
-"""Random baseline agent for Snake."""
-
-import random
+"""Random baseline agent — TODO: implement (Khalil Jouani)."""
 
 import numpy as np
 
@@ -10,10 +8,9 @@ class RandomAgent:
 
     def __init__(self, action_size: int = 4, seed: int | None = None):
         self.action_size = action_size
-        self.rng = random.Random(seed)
 
     def select_action(self, state: np.ndarray, training: bool = False) -> int:
-        return self.rng.randint(0, self.action_size - 1)
+        raise NotImplementedError("Khalil: implement random_agent.select_action()")
 
     def save(self, path: str) -> None:
         pass

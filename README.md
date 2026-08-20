@@ -2,6 +2,19 @@
 
 Projet de groupe — Agent capable de jouer au Snake à niveaux, avec comparaison objective contre un agent aléatoire.
 
+> **Ce repo est un scaffold** : structure + contrat d'API + stubs.  
+> Chaque développeur implémente **sa partie sur sa branche** avec son propre `git log`.  
+> **Prompts Cursor par personne** → [`docs/prompts/`](docs/prompts/)
+
+## Prompts équipe (à copier dans Cursor)
+
+| Dev | Branche | Prompt |
+|-----|---------|--------|
+| Aya El JANATI | `feat/game-engine` | [docs/prompts/aya.md](docs/prompts/aya.md) |
+| Khalil Jouani | `feat/environment` | [docs/prompts/khalil.md](docs/prompts/khalil.md) |
+| Hicham Guendouz | `feat/dqn-training` | [docs/prompts/hicham.md](docs/prompts/hicham.md) |
+| Marwan Ghrairi | `feat/ui` | [docs/prompts/marwan.md](docs/prompts/marwan.md) |
+
 ## Équipe
 
 | Membre | Rôle |
@@ -46,8 +59,6 @@ L'agent observe un vecteur de **11 features** :
 | food_dx, food_dy | Direction vers la nourriture (normalisé) |
 | level | Niveau actuel (normalisé) |
 | score_norm | Score (normalisé) |
-| body_ratio | Taille du serpent / grille |
-| steps_norm | Steps (normalisé) |
 
 > Document complet : [CONTRACT.md](CONTRACT.md)
 
@@ -78,41 +89,24 @@ source .venv/bin/activate   # Windows: .venv\Scripts\activate
 pip install -r requirements.txt
 ```
 
-## Utilisation
+## Utilisation (après implémentation par l'équipe)
 
-### Jouer manuellement (Pygame)
-
-```bash
-python -m ui.game_view --level 1
-```
-
-### Agent aléatoire (baseline)
+Les commandes ci-dessous fonctionneront une fois chaque membre aura implémenté sa partie :
 
 ```bash
+# Aya — game engine (headless)
+python -c "from game.game import Game; g=Game(); g.reset()"
+
+# Khalil — baseline random
 python -m training.evaluate --agent random --episodes 100 --level 1
-```
 
-### Entraîner le DQN
-
-```bash
+# Hicham — entraînement DQN
 python -m training.train --episodes 500 --level 1
-```
-
-### Évaluer le modèle entraîné (script indépendant)
-
-```bash
 python -m training.evaluate --agent dqn --model models/best_agent.pth --episodes 100
-```
 
-### Mode Auto AI (visual)
-
-```bash
+# Marwan — UI
+python -m ui.game_view --level 1
 python -m ui.auto_play --level 1 --model models/best_agent.pth
-```
-
-### Comparer Random vs DQN
-
-```bash
 python -m ui.statistics --episodes 100 --model models/best_agent.pth
 ```
 

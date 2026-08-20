@@ -1,6 +1,5 @@
-"""Food placement for Snake."""
+"""Food placement — TODO: implement (Aya El JANATI)."""
 
-import random
 from dataclasses import dataclass
 
 
@@ -15,12 +14,4 @@ class Food:
         board_height: int,
         occupied: set[tuple[int, int]],
     ) -> "Food":
-        free_cells = [
-            (x, y)
-            for x in range(board_width)
-            for y in range(board_height)
-            if (x, y) not in occupied
-        ]
-        if not free_cells:
-            raise RuntimeError("No free cell to spawn food")
-        return cls(position=random.choice(free_cells))
+        raise NotImplementedError("Aya: implement food.spawn()")
