@@ -1,9 +1,9 @@
-"""Snake game engine — headless, no Pygame dependency."""
+"""
+game — Moteur Snake headless (Bot_Snack).
 
-from game.game import Game, GameState
-from game.snake import Snake
-from game.board import Board
-from game.food import Food
-from game.level import Level
+Responsable : Aya El JANATI (Game Engine).
+Aucun import Pygame dans ce package : tout est jouable en headless
+via l'API définie dans CONTRACT.md (reset/step/get_state/...).
+"""
 
-__all__ = ["Game", "GameState", "Snake", "Board", "Food", "Level"]
+from game.game import Game, GameState  # noqa: F401
