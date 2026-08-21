@@ -107,7 +107,7 @@ Voir [results/experiments.csv](results/experiments.csv).
 
 | Exp | Modification | Score moyen | Résultat |
 |-----|-------------|------------:|----------|
-| E0 | Random baseline | — | Baseline |
+| E0 | Random baseline (100 parties, level 1, seed 42) | 0.060 | Baseline |
 | E1 | DQN initial | — | — |
 | E2+ | À compléter | — | — |
 
@@ -115,10 +115,19 @@ Voir [results/experiments.csv](results/experiments.csv).
 
 | Agent | Score moyen | Score max | Parties |
 |-------|------------:|----------:|--------:|
-| Random | — | — | — |
+| Random | 0.060 | 2 | 100 |
 | DQN | — | — | — |
 
-> À remplir après entraînement. Comparaison sur le **même nombre de parties**.
+> Baseline Random mesurée sur level 1, 100 parties, `--seed 42` (reproductible).
+> Sur plusieurs seeds, le score moyen Random reste dans ~0.06–0.15 : le hasard
+> ne mange quasiment jamais. C'est la référence à battre. Comparaison DQN vs
+> Random à faire sur le **même nombre de parties**.
+
+**Reproduire la baseline :**
+
+```bash
+python -m training.evaluate --agent random --episodes 100 --level 1 --seed 42
+```
 
 ## Liens externes
 
