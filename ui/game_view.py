@@ -98,44 +98,69 @@ class GameView:
 
     def _draw_menu(self) -> None:
         self.screen.fill(render.COLOR_BG)
-        cx = self.window_size[0] // 2
+        win_w, win_h = self.window_size
+        cx = win_w // 2
 
-        title = render._font(48, bold=True).render("SNAKE AI", True, render.COLOR_SNAKE_HEAD)
-        self.screen.blit(title, (cx - title.get_width() // 2, 60))
-        sub = render._font(22).render("Bot_Snack", True, render.COLOR_TEXT_DIM)
-        self.screen.blit(sub, (cx - sub.get_width() // 2, 118))
+        # Decorative top glow
+        glow = pygame.Surface((320, 120), pygame.SRCALPHA)
+        for r, a in ((60, 25), (40, 40), (20, 55)):
+            pygame.draw.circle(glow, (*render.COLOR_SNAKE_HEAD[:3], a), (160, 60), r)
+        self.screen.blit(glow, (cx - 160, 30))
 
-        y = 200
-        for i, item in enumerate(MENU_ITEMS):
-            selected = i == self.selected
-            label = f"[ {item} ]"
-            if item == "LEVEL SELECT":
-                label = f"[ LEVEL SELECT: {self.level} ]"
-            color = render.COLOR_ACCENT if selected else render.COLOR_TEXT
-            surf = render._font(30, bold=selected).render(label, True, color)
-            self.screen.blit(surf, (cx - surf.get_width() // 2, y))
-            y += 56
+        title = render._font(52, bold=True).render("SNAKE AI", True, render.COLOR_SNAKE_HEAD)
+        self.screen.blit(title, (cx - title.get_width() // 2, 52))
+        sub = render._font(20).render("Bot_Snack · Neural Playground", True, render.COLOR_TEXT_DIM)
+        self.screen.blit(sub, (cx - sub.get_width() // 2, 112))
 
-        info = [
-            f"Level: {self.level}",
-            f"Score: {self.last_score}",
-            f"Best:  {self.best_score}",
+        # Bottom-anchored footer so stats never overlap hints/engine.
+        hint = render._font(13).render(
+            "↑/↓ select  ·  Enter  ·  Esc quit", True, render.COLOR_TEXT_DIM
+        )
+        hint_y = win_h - hint.get_height() - 16
+
+        stats = [
+            ("Level", str(self.level)),
+            ("Last", str(self.last_score)),
+            ("Best", str(self.best_score)),
         ]
-        iy = y + 24
-        for line in info:
-            surf = render._font(20).render(line, True, render.COLOR_TEXT_DIM)
-            self.screen.blit(surf, (cx - surf.get_width() // 2, iy))
-            iy += 28
+        card_h = render.menu_stats_card_height(len(stats))
+        card_top = hint_y - 18 - card_h
 
-        eng = render._font(15).render(
-            f"engine: {self.engine_label}", True,
-            render.COLOR_WARN if not self.engine_real else render.COLOR_SAFE,
+        # Keep menu items above the stats card with adaptive spacing on short windows.
+        n_items = len(MENU_ITEMS)
+        item_height = 44
+        min_gap = 22
+        menu_start = 168
+        item_spacing = 50
+        if n_items > 1:
+            menu_bottom = menu_start + (n_items - 1) * item_spacing + item_height
+            if menu_bottom + min_gap > card_top:
+                item_spacing = max(
+                    36,
+                    (card_top - min_gap - item_height - menu_start) // (n_items - 1),
+                )
+                menu_bottom = menu_start + (n_items - 1) * item_spacing + item_height
+            if menu_bottom + min_gap > card_top:
+                menu_start = max(140, card_top - min_gap - item_height - (n_items - 1) * item_spacing)
+
+        render.draw_menu_stats_card(
+            self.screen,
+            cx,
+            card_top,
+            stats,
+            self.engine_label,
+            self.engine_real,
         )
-        self.screen.blit(eng, (cx - eng.get_width() // 2, self.window_size[1] - 60))
-        hint = render._font(15).render(
-            "↑/↓ select   Enter confirm   Esc quit", True, render.COLOR_TEXT_DIM
-        )
-        self.screen.blit(hint, (cx - hint.get_width() // 2, self.window_size[1] - 34))
+
+        y = menu_start
+        for i, item in enumerate(MENU_ITEMS):
+            label = item
+            if item == "LEVEL SELECT":
+                label = f"LEVEL {self.level}"
+            render.draw_menu_item(self.screen, label, cx, y, selected=(i == self.selected))
+            y += item_spacing
+
+        self.screen.blit(hint, (cx - hint.get_width() // 2, hint_y))
         pygame.display.flip()
 
     # -- manual play ---------------------------------------------------------
@@ -209,7 +234,9 @@ class GameView:
         pygame.display.flip()
 
 
-def _dir_to_action(direction: tuple[int, int]) -> int:
+def _dir_to_action(direction: tuple[int, int] | int) -> int:
+    if isinstance(direction, int):
+        return direction
     for action, vec in ACTION_VECTORS.items():
         if vec == direction:
             return action

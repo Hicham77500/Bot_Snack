@@ -106,4 +106,9 @@ def observation_from_state(state: Any, max_level: int = fb.MAX_LEVEL):
     Works whether ``state`` comes from the real game engine or the fallback,
     as long as it exposes the CONTRACT.md ``GameState`` attributes.
     """
-    return fb.build_observation(state, max_level=max_level)
+    try:
+        from environment.observation import build_observation as real_build
+
+        return real_build(state, max_level=max_level)
+    except Exception:
+        return fb.build_observation(state, max_level=max_level)

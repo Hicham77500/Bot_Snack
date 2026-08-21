@@ -20,14 +20,13 @@ from ui.fallback_engine import (
     ACTION_NAMES,
     MAX_LEVEL,
     ObservationInfo,
-    build_observation,
 )
 
 FPS_AUTO = 12  # agent steps per second
 
 
 def _observation_info(state, action: int) -> ObservationInfo:
-    obs = build_observation(state)
+    obs = adapter.observation_from_state(state)
     return ObservationInfo(
         danger_front=obs[4] > 0.5,
         danger_left=obs[5] > 0.5,
@@ -107,7 +106,13 @@ def _draw(
 ) -> None:
     render.draw_board(screen, state)
     obs_lines = obs_info.as_lines() if obs_info is not None else ()
-    agent_display = "DQN" if agent_real else f"DQN? ({agent_label})"
+    footer: list[render.FooterLine] = [
+        f"engine: {env_label}",
+        f"agent: {'DQN (trained)' if agent_real else agent_label}",
+    ]
+    if not agent_real:
+        footer.append(("placeholder — no trained model", render.COLOR_WARN))
+    footer.append("Esc: back")
     render.draw_sidebar(
         screen,
         state,
@@ -117,20 +122,11 @@ def _draw(
             ("Level", state.level),
             ("Score", state.score),
             ("Best", best),
-            ("Agent", agent_display),
+            ("Agent", "DQN" if agent_real else "DQN?"),
         ],
-        footer=[
-            f"engine: {env_label}",
-            f"agent : {'DQN (trained)' if agent_real else agent_label}",
-            "Esc: back",
-        ],
+        footer=footer,
         observation_lines=obs_lines,
     )
-    if not agent_real:
-        warn = render._font(14).render(
-            "placeholder policy — no trained model", True, render.COLOR_WARN
-        )
-        screen.blit(warn, (render.MARGIN, screen.get_height() - 22))
     pygame.display.flip()
 
 

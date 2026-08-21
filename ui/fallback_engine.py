@@ -217,9 +217,17 @@ class FallbackGame:
 
 
 # --- Observation (CONTRACT.md v1, 11 features) ------------------------------
+def _direction_vector(snake_direction) -> tuple[int, int]:
+    """Accept int action index (0-3) or (dx, dy) tuple from GameState."""
+    if isinstance(snake_direction, (int, np.integer)):
+        return ACTION_VECTORS[int(snake_direction)]
+    dx, dy = snake_direction
+    return int(dx), int(dy)
+
+
 def build_observation(state: GameState, max_level: int = MAX_LEVEL) -> np.ndarray:
     """Build the 11-feature float32 observation described in CONTRACT.md."""
-    dx, dy = state.snake_direction
+    dx, dy = _direction_vector(state.snake_direction)
     head_x, head_y = state.snake_body[0]
 
     # Local frame: left / right relative to heading.
@@ -353,15 +361,15 @@ class HeuristicAgent:
         self._rng = random.Random(seed)
 
     def select_action(self, state: np.ndarray, training: bool = False) -> int:
-        # state layout: [dx, dy, _, _, dgr_front, dgr_left, dgr_right,
-        #                food_dx, food_dy, level, score]
-        dx, dy = state[0], state[1]
+        # state layout (real env): [one-hot dir x4, dgr_front, dgr_left, dgr_right,
+        #                           food_dx, food_dy, level, score]
         danger = {"front": state[4], "left": state[5], "right": state[6]}
         food_dx, food_dy = state[7], state[8]
 
-        heading = (int(round(dx)), int(round(dy)))
-        left_vec = (int(round(dy)), int(round(-dx)))
-        right_vec = (int(round(-dy)), int(round(dx)))
+        heading = _heading_from_obs(state)
+        dx, dy = heading
+        left_vec = (dy, -dx)
+        right_vec = (-dy, dx)
 
         # Rank candidate directions by how much they reduce food distance.
         candidates = {
@@ -386,3 +394,18 @@ def _vec_to_action(vec: tuple[int, int]) -> int:
         if v == vec:
             return action
     return RIGHT
+
+
+def _heading_from_obs(obs: np.ndarray) -> tuple[int, int]:
+    """Decode the snake heading from an 11-feature observation vector.
+
+    ``environment/observation.py`` uses a one-hot direction at ``obs[0:4]``.
+    The legacy fallback layout stores ``(dx, dy)`` at ``obs[0]`` and ``obs[1]``.
+    """
+    o = obs[0:4]
+    if np.count_nonzero(o >= 0.5) == 1 and np.all(o >= 0):
+        return ACTION_VECTORS[int(np.argmax(o))]
+    dx, dy = int(round(obs[0])), int(round(obs[1]))
+    if (dx, dy) in ACTION_VECTORS.values():
+        return (dx, dy)
+    return ACTION_VECTORS[RIGHT]
